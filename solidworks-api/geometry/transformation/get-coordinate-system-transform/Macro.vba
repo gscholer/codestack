@@ -26,10 +26,10 @@ Sub main()
                 Dim vMatrix As Variant
                 vMatrix = swMathTransform.ArrayData
                 
-                Debug.Print vMatrix(0) & "," & vMatrix(1) & "," & vMatrix(2) & "," & vMatrix(3) & ","
-                Debug.Print vMatrix(4) & "," & vMatrix(5) & "," & vMatrix(6) & "," & vMatrix(7) & ","
-                Debug.Print vMatrix(8) & "," & vMatrix(9) & "," & vMatrix(10) & "," & vMatrix(11) & ","
-                Debug.Print vMatrix(12) & "," & vMatrix(13) & "," & vMatrix(14) & "," & vMatrix(15)
+                Debug.Print vMatrix(0) & "," & vMatrix(1) & "," & vMatrix(2)
+                Debug.Print vMatrix(3) & "," & vMatrix(4) & "," & vMatrix(5)
+                Debug.Print vMatrix(6) & "," & vMatrix(7) & "," & vMatrix(8)
+                Debug.Print vMatrix(9) & "," & vMatrix(10) & "," & vMatrix(11) & "," & vMatrix(12)
                 
             Else
                 MsgBox "Selected feature is not a coordinate system"
