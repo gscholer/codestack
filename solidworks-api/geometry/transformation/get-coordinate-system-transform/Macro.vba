@@ -22,25 +22,37 @@ Sub main()
                 Dim swParentComp As SldWorks.Component2
                 Dim swMathTransform As SldWorks.MathTransform
                 
-                '将 feature 转换为 entity
-                Set swEntity = swFeat
-                
+
                 Dim swCoordSys As SldWorks.CoordinateSystemFeatureData
                 Set swCoordSys = swFeat.GetDefinition
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                ' Transform Property (ICoordinateSystemFeatureData)
+                ' https://help.solidworks.com/2018/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.icoordinatesystemfeaturedata~transform.html
+                '
+                ' 这个变换是坐标系对象相对所在部件坐标系的变换
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''
                 '得到坐标系相对部件的变换
                 Set swMathTransform = swCoordSys.transform
-
+                
+                '将 feature 转换为 entity
+                Set swEntity = swFeat
                 '坐标系所在的部件
                 Set swParentComp = swEntity.GetComponent
                 
-                '得到最顶层的部件
-                While Not swParentComp Is Nothing
-                    '得到坐标系相对组件所在默认坐标系的变换
-                    Set swMathTransform = swMathTransform.Multiply(swParentComp.Transform2)
-                    Set swParentComp = swParentComp.GetParent
-                Wend
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                ' IMultiply Method (IMathTransform)
+                ' https://help.solidworks.com/2012/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.imathtransform~imultiply.html
+                '
+                ' the result of transforming math transform with respect to the transformIn coordinate frame
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                ' Transform2 Property (IComponent2)
+                ' https://help.solidworks.com/2012/english/api/sldworksapi/solidworks.interop.sldworks~solidworks.interop.sldworks.icomponent2~transform2.html
+                '
+                ' The transform is still with respect to the root component of the active assembly document
+                ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                '部件相对与根部件的变换
+                Set swMathTransform = swMathTransform.Multiply(swParentComp.Transform2)
                 
-
                 '输出结果
                 Dim vMatrix As Variant
                 vMatrix = swMathTransform.ArrayData
@@ -144,4 +156,3 @@ Function ArcTan2(X, Y)
             ArcTan2 = PI / 2 * Sgn(Y)
     End Select
 End Function
-
